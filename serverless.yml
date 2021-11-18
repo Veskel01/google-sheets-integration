@@ -1,0 +1,26 @@
+service: sheet-serverless
+
+plugins:
+  - serverless-plugin-optimize
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: prod
+  region: eu-central-1
+  profile: localhost-integration
+  stackName: sheet-crm-project
+  lambdaHashingVersion: 20201221
+
+functions:
+  main:
+    handler: 'dist/main.handler'
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
